@@ -1,21 +1,16 @@
 from fastapi import FastAPI
 
 from app.core.config import settings
-from app.core.database import Base, engine
 from app.api.v1.api_router import api_router
+from app.core.database import init_db
 
-Base.metadata.create_all(bind=engine)
 
-app = FastAPI(
-    title=settings.PROJECT_NAME
-)
+app = FastAPI(title=settings.PROJECT_NAME)
 
-app.include_router(
-    api_router,
-    prefix=settings.API_V1_STR
-)
+init_db()
 
+app.include_router(api_router, prefix=settings.API_V1_STR)
  
 @app.get("/")
 def root():
-    return {"message": "GameColec API is running"}
+    return {"message": "GameColec Rodando com sucesso!!"}

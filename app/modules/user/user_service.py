@@ -11,7 +11,7 @@ def create_user(db: Session, email: str, password: str, role: str):
         role=role
     )
     db.add(user)
-    db.commit()
+    db.commit() 
     db.refresh(user)
     return user
 
