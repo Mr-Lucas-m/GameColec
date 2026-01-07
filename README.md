@@ -95,7 +95,7 @@ Authorization: Bearer <TOKEN_JWT>
 
 ## 🚀 Tecnologias Utilizadas
 
-* **Python 3.13**
+* **Python >= 3.13**
 * **FastAPI**
 * **SQLAlchemy**
 * **PostgreSQL** (compatível com SQLite para testes)
@@ -110,7 +110,7 @@ Authorization: Bearer <TOKEN_JWT>
 ### 1️⃣ Clone o projeto
 
 ```bash
-git clone https://github.com/seu-usuario/gamecolec.git
+git clone https://github.com/Mr-Lucas-m/GameColec.git
 cd gamecolec
 ```
 
