@@ -14,38 +14,51 @@ A **GameColec API** permite:
 * Cadastro de games vinculados a consoles (somente admin)
 * Consulta de games por console
 
-Projeto ideal para:
-
-* Portfólio backend profissional
-* Base para sistemas maiores
-* Demonstração de autenticação e autorização robustas
 
 ---
 
 ## 🏗️ Arquitetura do Projeto
 
 ```text
-app/
-├── api/
-│   └── v1/
-│       └── routes.py
-├── core/
-│   ├── config.py
-│   ├── database.py
-│   ├── dependencies.py
-│   └── security.py
-├── modules/
-│   ├── auth/
-│   ├── user/
-│   ├── console/
-│   └── game/
-├── main.py
-
-├── tests/
-│   ├── conftest.py
-│   ├── test_auth.py
-│   ├── test_console.py
-│   └── test_game.py
+├── app
+│ ├── api
+│ │ └── v1
+│ │ └── api_router.py
+│ ├── core
+│ │ ├── __init__.py
+│ │ ├── config.py # Configurações e variáveis de ambiente
+│ │ ├── database.py # Conexão e sessão do banco
+│ │ ├── dependencies.py # Dependências globais (auth, roles)
+│ │ └── security.py # JWT, hash de senha
+│ ├── modules
+│ │ ├── auth
+│ │ │ ├── auth_router.py
+│ │ │ └── auth_service.py
+│ │ ├── console
+│ │ │ ├── console_model.py
+│ │ │ ├── console_router.py
+│ │ │ ├── console_schema.py
+│ │ │ └── console_service.py
+│ │ ├── game
+│ │ │ ├── game_model.py
+│ │ │ ├── game_router.py
+│ │ │ ├── game_schema.py
+│ │ │ └── game_service.py
+│ │ └── user
+│ │ ├── user_model.py
+│ │ ├── user_router.py
+│ │ ├── user_schema.py
+│ │ └── user_service.py
+│ └── main.py
+├── tests
+│ ├── conftest.py
+│ ├── test_auth.py
+│ ├── test_console.py
+│ └── test_game.py
+├── .env.example
+├── .gitignore
+├── README.md
+└── requirements.txt
 ```
 
 ### 📐 Padrões Utilizados
