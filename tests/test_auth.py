@@ -7,7 +7,7 @@ def test_login_invalid_password(api_client):
     response = api_client.post(
         "/api/v1/auth/login",
         data={
-            "username": "admin@test.com",
+            "username": "admin@games.com",
             "password": "senha_errada"
         }
     )

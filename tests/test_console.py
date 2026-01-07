@@ -34,7 +34,6 @@ def test_create_console_as_user_forbidden(api_client, user_token):
 
 
 def test_list_games_by_console(api_client, admin_token):
-    # cria console
     console_response = api_client.post(
         "/api/v1/consoles",
         headers={

@@ -90,7 +90,22 @@ Exemplo de Header:
 ```http
 Authorization: Bearer <TOKEN_JWT>
 ```
+---
 
+## 🛡️ Usuário Admin Automático
+
+* Ao iniciar a aplicação, um usuário admin é criado automaticamente caso não exista.
+* Isso garante:
+* Segurança inicial da API
+* Controle total sobre criação de dados críticos
+* Bloqueio de criação de consoles e games por usuários comuns
+
+### Configuração via .env:
+
+```
+ADMIN_EMAIL=admin@games.com
+ADMIN_PASSWORD=admin123
+```
 ---
 
 ## 🚀 Tecnologias Utilizadas
@@ -131,10 +146,12 @@ pip install -r requirements.txt
 ### 4️⃣ Configure o `.env`
 
 ```env
-DATABASE_URL=postgresql://user:password@localhost:5432/gamecolec
+DATABASE_URL=postgresql://user:password@localhost:5432/name_db
 SECRET_KEY=super-secret-key
 ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=60
+
+ADMIN_EMAIL=admin@games.com
+ADMIN_PASSWORD=admin123
 ```
 
 ### 5️⃣ Execute a aplicação
@@ -206,17 +223,6 @@ Acesse:
 * Swagger UI → `http://localhost:8000/docs`
 * ReDoc → `http://localhost:8000/redoc`
 
----
-
-## 🧠 Aprendizados Demonstrados
-
-* JWT na prática
-* Role Based Access Control (RBAC)
-* Testes com FastAPI + Pytest
-* Arquitetura escalável
-* Padrões profissionais de API
-
----
 
 ## 👨‍💻 Autor
 
@@ -225,13 +231,3 @@ Backend Developer • Python • FastAPI
 
 ---
 
-## ⭐ Considerações Finais
-
-Este projeto foi desenvolvido com foco em **qualidade, organização e práticas reais de mercado**, sendo totalmente extensível para novas funcionalidades como:
-
-* Favoritos
-* Avaliações
-* Upload de imagens
-* Paginação e filtros
-
-🚀

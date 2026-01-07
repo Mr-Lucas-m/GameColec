@@ -1,5 +1,4 @@
 def test_create_game_as_admin(api_client, admin_token):
-    # cria console
     console_response = api_client.post(
         "/api/v1/consoles",
         headers={
@@ -15,7 +14,6 @@ def test_create_game_as_admin(api_client, admin_token):
 
     console_id = console_response.json()["data"]["id"]
 
-    # cria game
     response = api_client.post(
         "/api/v1/games",
         headers={

@@ -1,42 +1,30 @@
 import sys
 import os
+import pytest
+from fastapi.testclient import TestClient
 
-# Garante que o Python encontre o pacote "app"
+# garante import do app
 sys.path.append(
     os.path.abspath(
         os.path.join(os.path.dirname(__file__), "..")
     )
 )
 
-import pytest
-from fastapi.testclient import TestClient
-
 from app.main import app
-
-client = TestClient(app)
+from app.core.config import settings
 
 
 @pytest.fixture(scope="session")
 def api_client():
-    return client
+    """
+    Garante que os eventos de startup sejam executados
+    (criação do admin, init_db, etc)
+    """
+    with TestClient(app) as client:
+        yield client
 
 
-def create_user(email: str, password: str, role: str):
-    response = client.post(
-        "/api/v1/auth/register",
-        json={
-            "email": email,
-            "password": password,
-            "role": role
-        }
-    )
-
-    # 400 se o usuário já existir
-    assert response.status_code in (200, 201, 400)
-    return response.json() if response.status_code in (200, 201) else None
-
-
-def login(email: str, password: str) -> str:
+def login(client: TestClient, email: str, password: str) -> str:
     response = client.post(
         "/api/v1/auth/login",
         data={
@@ -50,12 +38,35 @@ def login(email: str, password: str) -> str:
 
 
 @pytest.fixture(scope="session")
-def admin_token():
-    create_user("admin@test.com", "123456", "admin")
-    return login("admin@test.com", "123456")
+def admin_token(api_client):
+    """
+    Admin é criado automaticamente no startup
+    """
+    return login(
+        api_client,
+        settings.ADMIN_EMAIL,
+        settings.ADMIN_PASSWORD
+    )
 
 
 @pytest.fixture(scope="session")
-def user_token():
-    create_user("user@test.com", "123456", "user")
-    return login("user@test.com", "123456")
+def user_token(api_client, admin_token):
+    """
+    User comum criado pelo ADMIN
+    """
+    response = api_client.post(
+        "/api/v1/auth/register",
+        headers={
+            "Authorization": f"Bearer {admin_token}"
+        },
+        json={
+            "email": "user@test.com",
+            "password": "123456",
+            "role": "user"
+        }
+    )
+
+    # 201 criado | 400 já existe
+    assert response.status_code in (201, 400)
+
+    return login(api_client, "user@test.com", "123456")

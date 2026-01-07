@@ -3,6 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
+from app.core.dependencies import admin_required
 from app.core.security import create_access_token
 from app.modules.user.user_schema import UserCreate
 from app.modules.user.user_service import create_user
@@ -11,7 +12,7 @@ from app.modules.auth.auth_service import authenticate_user
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
 
-@router.post("/register", status_code=status.HTTP_201_CREATED)
+@router.post("/register", status_code=status.HTTP_201_CREATED, dependencies=[Depends(admin_required)])
 def register(user: UserCreate, db: Session = Depends(get_db)):
     try:
         created_user = create_user(
